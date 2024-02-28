@@ -9,6 +9,7 @@ const authRoute = require('./routes/auth');
 
 dotenv.config();
 
+//Connect to MongoDB
 async function connect() {
     try {
         await mongoose.connect(process.env.MONGO_URL);
@@ -20,18 +21,16 @@ async function connect() {
 
 connect();
 
-//middleware
+//Middleware
 app.use(express.json());
 app.use(helmet());
 app.use(morgan('common'));
 
+//Routes
 app.use('/api/users', userRoute);
 app.use('/api/auth', authRoute);
 
-app.get("/", (req, res) => {
-    res.send('Hello World!');
-});
-
+//Listener
 app.listen(5000, () => {
     console.log("Server listening on port 5000.")
 });
