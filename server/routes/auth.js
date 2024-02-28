@@ -43,6 +43,7 @@ router.post('/sign-in', async (req, res) => {
         const validPassword = await bcrypt.compare(password, user.password);
         !validPassword && res.status(401).json({ message: 'Invalid credentials.' })
 
+        delete user._doc.password;
         res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ message: 'Oops! Something went wrong!' });
